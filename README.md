@@ -1,8 +1,10 @@
 # silabs-firmware-list
 
 每小时从 [`Nerivec/silabs-firmware-builder`](https://github.com/Nerivec/silabs-firmware-builder)
-的最新 Release 拉取固件资产，解析 `.gbl` 文件名，计算 sha256（增量），
+的最新 Release 拉取固件资产，**只保留 SONOFF dongle 系列**（Dongle-E / -L / -M / -PMG24，
+`refresh_firmware_list.py` 里的 `is_sonoff_dongle`），解析 `.gbl` 文件名，计算 sha256（增量），
 生成 `firmwares.json` 提交回本仓库。网站跨域 fetch 它的 raw URL 渲染固件列表。
+要改收集范围就改那个过滤函数（返回 `True` 的留下），其他都不用动。
 
 ## 数据流
 
