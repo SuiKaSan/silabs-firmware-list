@@ -1,0 +1,11 @@
+[project]
+name = "silabs-firmware-list"
+version = "0.1.0"
+description = "Hourly sync of Nerivec/silabs-firmware-builder releases into firmwares.json"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.mypy]
+strict = true
