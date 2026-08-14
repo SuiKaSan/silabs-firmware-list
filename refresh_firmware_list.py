@@ -18,6 +18,7 @@ import hashlib
 import json
 import os
 import sys
+import time
 import urllib.request
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -52,14 +53,30 @@ def http_get_json(url: str) -> Any:
         return json.loads(resp.read().decode())
 
 
-def sha256_of(url: str) -> str:
-    """Stream-download `url` and return its sha256 hex digest."""
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    digest = hashlib.sha256()
-    with urllib.request.urlopen(req, timeout=300) as resp:
-        for chunk in iter(lambda: resp.read(CHUNK), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
+def download_and_hash(url: str, attempts: int = 3, backoff_s: int = 3) -> str:
+    """Stream-download `url` and return its sha256 hex digest.
+
+    Retries on transient network errors so one flaky CDN connection
+    doesn't fail the whole run (each retry restarts the stream and the
+    digest from scratch).
+    """
+    last_error: Optional[Exception] = None
+    for attempt in range(attempts):
+        if attempt:
+            time.sleep(backoff_s * attempt)
+        digest = hashlib.sha256()
+        try:
+            req = urllib.request.Request(
+                url, headers={"User-Agent": USER_AGENT}
+            )
+            with urllib.request.urlopen(req, timeout=300) as resp:
+                for chunk in iter(lambda: resp.read(CHUNK), b""):
+                    digest.update(chunk)
+            return digest.hexdigest()
+        except (urllib.error.URLError, OSError) as exc:
+            last_error = exc
+    raise RuntimeError(f"failed to download {url} after {attempts} attempts") \
+        from last_error
 
 
 def load_previous() -> Optional[Dict[str, Any]]:
@@ -79,7 +96,7 @@ def main() -> int:
     manifest = build_manifest(
         release,
         load_previous(),
-        sha256_of,
+        download_and_hash,
         owner=OWNER,
         repo=REPO,
         refreshed_at=refreshed_at,

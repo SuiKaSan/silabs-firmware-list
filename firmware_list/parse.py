@@ -44,9 +44,11 @@ def parse_gbl_filename(filename: str) -> Dict[str, object]:
     groups = match.groupdict()
 
     parts = re.split(r"[_-]", groups["device"], maxsplit=1)
+    if len(parts) != 2:
+        raise ValueError(f"cannot split device into brand/model: {filename}")
     record: Dict[str, object] = {
         "brand": parts[0],
-        "model": parts[1] if len(parts) == 2 else "",
+        "model": parts[1],
         "type": groups["fw_type"],
         "version": groups["version"],
     }
