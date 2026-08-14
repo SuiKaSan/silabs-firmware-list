@@ -130,3 +130,34 @@ def test_partial_failure_keeps_good_assets_and_warns(capsys):
     assert manifest["count"] == 1
     assert manifest["firmwares"][0]["type"] == "zigbee_ncp"
     assert "warning" in capsys.readouterr().err
+
+
+def test_keep_filter_restricts_manifest_and_reuses_hashes():
+    from refresh_firmware_list import is_sonoff_dongle
+
+    recorder = Recorder()
+    manifest = build(previous=stale_previous(), recorder=recorder,
+                     keep=is_sonoff_dongle)
+    # only the sonoff dongle record survives; bootloader (nabucasa) is out
+    assert manifest["count"] == 1
+    assert manifest["firmwares"][0]["brand"] == "sonoff"
+    assert manifest["firmwares"][0]["model"] == "dongle-pmg24"
+    # and its hash was still reused from the previous manifest
+    assert recorder.fetched == []
+
+
+def test_keep_filter_rejects_manifest_when_everything_filtered_out():
+    def keep_nothing(fw):
+        return False
+
+    with pytest.raises(ValueError):
+        build(keep=keep_nothing)
+
+
+def test_sonoff_dongle_filter_accepts_zbdongle_e_spelling():
+    from refresh_firmware_list import is_sonoff_dongle
+
+    assert is_sonoff_dongle({"brand": "sonoff", "model": "zbdongle-e"})
+    assert is_sonoff_dongle({"brand": "sonoff", "model": "dongle-pmg24"})
+    assert not is_sonoff_dongle({"brand": "nabucasa", "model": "skyconnect"})
+    assert not is_sonoff_dongle({"brand": "sonoff", "model": "other-model"})

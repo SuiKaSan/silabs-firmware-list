@@ -88,6 +88,18 @@ def load_previous() -> Optional[Dict[str, Any]]:
     return None
 
 
+def is_sonoff_dongle(firmware: Dict[str, Any]) -> bool:
+    """Keep filter: only SONOFF dongle series.
+
+    Covers both model spellings: `dongle-*` (Dongle-L/M/PMG24) and the
+    older `zbdongle-*` (Dongle-E, named after the ZBDongle product line).
+    """
+    model = str(firmware.get("model", ""))
+    return firmware.get("brand") == "sonoff" and (
+        model.startswith("dongle") or model.startswith("zbdongle")
+    )
+
+
 def main() -> int:
     release = http_get_json(API_URL)
     refreshed_at = dt.datetime.now(dt.timezone.utc).strftime(
@@ -100,6 +112,7 @@ def main() -> int:
         owner=OWNER,
         repo=REPO,
         refreshed_at=refreshed_at,
+        keep=is_sonoff_dongle,
     )
     OUTPUT.write_text(
         json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
