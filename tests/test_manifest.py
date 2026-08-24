@@ -2,7 +2,7 @@ import copy
 
 import pytest
 
-from firmware_list.manifest import build_manifest
+from firmware_list.manifest import build_manifest, manifest_changed
 
 RELEASE = {
     "tag_name": "v2025.6.2-update1",
@@ -230,3 +230,16 @@ def test_sonoff_dongle_filter_accepts_zbdongle_e_spelling():
     assert is_sonoff_dongle({"brand": "sonoff", "model": "dongle-pmg24"})
     assert not is_sonoff_dongle({"brand": "nabucasa", "model": "skyconnect"})
     assert not is_sonoff_dongle({"brand": "sonoff", "model": "other-model"})
+
+
+def test_manifest_changed_ignores_refreshed_at_only():
+    manifest = build()
+    same = dict(manifest, refreshedAt="2099-01-01T00:00:00Z")
+    assert not manifest_changed(manifest, same)
+
+
+def test_manifest_changed_detects_real_changes():
+    manifest = build()
+    assert manifest_changed(None, manifest)
+    trimmed = dict(manifest, count=manifest["count"] - 1)
+    assert manifest_changed(manifest, trimmed)

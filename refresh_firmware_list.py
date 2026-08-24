@@ -23,7 +23,11 @@ import urllib.request
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from firmware_list.manifest import build_manifest, pick_latest_releases
+from firmware_list.manifest import (
+    build_manifest,
+    manifest_changed,
+    pick_latest_releases,
+)
 
 API_URL = (
     "https://api.github.com/repos/Nerivec/silabs-firmware-builder"
@@ -109,15 +113,21 @@ def main() -> int:
     refreshed_at = dt.datetime.now(dt.timezone.utc).strftime(
         "%Y-%m-%dT%H:%M:%SZ"
     )
+    previous = load_previous()
     manifest = build_manifest(
         releases,
-        load_previous(),
+        previous,
         download_and_hash,
         owner=OWNER,
         repo=REPO,
         refreshed_at=refreshed_at,
         keep=is_sonoff_dongle,
     )
+    previous = load_previous()
+    if not manifest_changed(previous, manifest):
+        tags = ", ".join(r["tag"] for r in manifest["releases"])
+        print(f"no change (except refreshedAt) — keeping {tags}")
+        return 0
     OUTPUT.write_text(
         json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
     )

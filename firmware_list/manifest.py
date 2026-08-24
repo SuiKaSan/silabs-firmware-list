@@ -9,6 +9,21 @@ HashFetcher = Callable[[str], str]
 KeepFilter = Callable[[Dict[str, Any]], bool]
 
 
+def manifest_changed(
+    old: Optional[Dict[str, Any]],
+    new: Dict[str, Any],
+) -> bool:
+    """True when the manifest's substance changed.
+
+    `refreshedAt` is a per-run timestamp and is ignored: when nothing else
+    moved, callers should keep the committed file (and its history) as is.
+    """
+    if old is None:
+        return True
+    keys = (set(old) | set(new)) - {"refreshedAt"}
+    return any(old.get(k) != new.get(k) for k in keys)
+
+
 def pick_latest_releases(
     releases: Sequence[Dict[str, Any]],
 ) -> List[Dict[str, Any]]:
