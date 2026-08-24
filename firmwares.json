@@ -1,10 +1,20 @@
 {
   "owner": "Nerivec",
   "repo": "silabs-firmware-builder",
-  "releaseTag": "v2025.6.2-update1",
-  "releasePublishedAt": "2026-03-28T10:58:20Z",
-  "refreshedAt": "2026-08-24T13:07:27Z",
-  "count": 12,
+  "releases": [
+    {
+      "tag": "v2025.6.2-update1",
+      "publishedAt": "2026-03-28T10:58:20Z",
+      "prerelease": false
+    },
+    {
+      "tag": "v2026.6.1-pre1",
+      "publishedAt": "2026-08-07T21:23:36Z",
+      "prerelease": true
+    }
+  ],
+  "refreshedAt": "2026-08-24T10:08:07Z",
+  "count": 24,
   "firmwares": [
     {
       "brand": "sonoff",
@@ -16,6 +26,8 @@
       "filename": "sonoff_dongle-lmg21_openthread_rcp_2.7.2.0_GitHub-fb0446f53_460800_sw_flow.gbl",
       "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2025.6.2-update1/sonoff_dongle-lmg21_openthread_rcp_2.7.2.0_GitHub-fb0446f53_460800_sw_flow.gbl",
       "size": 100276,
+      "releaseTag": "v2025.6.2-update1",
+      "prerelease": false,
       "sha256": "b155f120a3509c3311d3c90db11c875ceeb8f391507d72e7d10aed81b75381a0"
     },
     {
@@ -28,6 +40,8 @@
       "filename": "sonoff_dongle-lmg21_zigbee_ncp_8.2.2.0_115200_sw_flow.gbl",
       "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2025.6.2-update1/sonoff_dongle-lmg21_zigbee_ncp_8.2.2.0_115200_sw_flow.gbl",
       "size": 213908,
+      "releaseTag": "v2025.6.2-update1",
+      "prerelease": false,
       "sha256": "d153b69a66dc590151407a1eeb8c78e0e34613febf02aecd14c71c463e9ffab6"
     },
     {
@@ -40,6 +54,8 @@
       "filename": "sonoff_dongle-lmg21_zigbee_router_8.2.2.0_115200_sw_flow.gbl",
       "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2025.6.2-update1/sonoff_dongle-lmg21_zigbee_router_8.2.2.0_115200_sw_flow.gbl",
       "size": 195448,
+      "releaseTag": "v2025.6.2-update1",
+      "prerelease": false,
       "sha256": "a1541f2900d5bbb57ce9ee74b9a31db75572f761ef73dbde5b19ce2b3757700c"
     },
     {
@@ -52,6 +68,8 @@
       "filename": "sonoff_dongle-m_openthread_rcp_2.7.2.0_GitHub-fb0446f53_115200_sw_flow.gbl",
       "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2025.6.2-update1/sonoff_dongle-m_openthread_rcp_2.7.2.0_GitHub-fb0446f53_115200_sw_flow.gbl",
       "size": 122816,
+      "releaseTag": "v2025.6.2-update1",
+      "prerelease": false,
       "sha256": "42cca4fb238dff7502e76d29f987a5af3ecded94bf7333d82d5b4c8fdce0ac0d"
     },
     {
@@ -64,6 +82,8 @@
       "filename": "sonoff_dongle-m_zigbee_ncp_8.2.2.0_115200_sw_flow.gbl",
       "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2025.6.2-update1/sonoff_dongle-m_zigbee_ncp_8.2.2.0_115200_sw_flow.gbl",
       "size": 237120,
+      "releaseTag": "v2025.6.2-update1",
+      "prerelease": false,
       "sha256": "4a3a685abfc15fa6d3a0dc7bd1676f4447c72b94ccc54752f983038f6043fa62"
     },
     {
@@ -76,6 +96,8 @@
       "filename": "sonoff_dongle-m_zigbee_router_8.2.2.0_115200_sw_flow.gbl",
       "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2025.6.2-update1/sonoff_dongle-m_zigbee_router_8.2.2.0_115200_sw_flow.gbl",
       "size": 219212,
+      "releaseTag": "v2025.6.2-update1",
+      "prerelease": false,
       "sha256": "2ecbbd49850972e3ad8cf119b72c62228abd50e8df01702c1e476868f453914e"
     },
     {
@@ -88,6 +110,8 @@
       "filename": "sonoff_dongle-pmg24_openthread_rcp_2.7.2.0_GitHub-fb0446f53_460800_sw_flow.gbl",
       "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2025.6.2-update1/sonoff_dongle-pmg24_openthread_rcp_2.7.2.0_GitHub-fb0446f53_460800_sw_flow.gbl",
       "size": 122816,
+      "releaseTag": "v2025.6.2-update1",
+      "prerelease": false,
       "sha256": "a3cf53efb565b1492a1d9062a18ff3c4c0200941f79c7bfa3211f10e756d4ade"
     },
     {
@@ -100,6 +124,8 @@
       "filename": "sonoff_dongle-pmg24_zigbee_ncp_8.2.2.0_460800_sw_flow.gbl",
       "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2025.6.2-update1/sonoff_dongle-pmg24_zigbee_ncp_8.2.2.0_460800_sw_flow.gbl",
       "size": 237152,
+      "releaseTag": "v2025.6.2-update1",
+      "prerelease": false,
       "sha256": "dbcbbbd6fe69a67f33d69490d248021bae2832ac37389e56652a0c35f0f00c64"
     },
     {
@@ -112,6 +138,8 @@
       "filename": "sonoff_dongle-pmg24_zigbee_router_8.2.2.0_115200_sw_flow.gbl",
       "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2025.6.2-update1/sonoff_dongle-pmg24_zigbee_router_8.2.2.0_115200_sw_flow.gbl",
       "size": 219212,
+      "releaseTag": "v2025.6.2-update1",
+      "prerelease": false,
       "sha256": "70b6f1113d1ff83765e48ef926d9e8e7f9b4541767131b9c2fbd4c2320daab0c"
     },
     {
@@ -124,6 +152,8 @@
       "filename": "sonoff_zbdonglee_openthread_rcp_2.7.2.0_GitHub-fb0446f53_921600_sw_flow.gbl",
       "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2025.6.2-update1/sonoff_zbdonglee_openthread_rcp_2.7.2.0_GitHub-fb0446f53_921600_sw_flow.gbl",
       "size": 100276,
+      "releaseTag": "v2025.6.2-update1",
+      "prerelease": false,
       "sha256": "8c1bb44abb213b19806c3a8d5b86f01fb152301bee9f91db5c09b5a3c313c74b"
     },
     {
@@ -136,6 +166,8 @@
       "filename": "sonoff_zbdonglee_zigbee_ncp_8.2.2.0_115200_sw_flow.gbl",
       "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2025.6.2-update1/sonoff_zbdonglee_zigbee_ncp_8.2.2.0_115200_sw_flow.gbl",
       "size": 213908,
+      "releaseTag": "v2025.6.2-update1",
+      "prerelease": false,
       "sha256": "a99fe1a9d967ccebddba0ef3e547f2e7af3d5949b30fe77b1c756a13997fdcc6"
     },
     {
@@ -148,7 +180,177 @@
       "filename": "sonoff_zbdonglee_zigbee_router_8.2.2.0_115200_sw_flow.gbl",
       "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2025.6.2-update1/sonoff_zbdonglee_zigbee_router_8.2.2.0_115200_sw_flow.gbl",
       "size": 197476,
+      "releaseTag": "v2025.6.2-update1",
+      "prerelease": false,
       "sha256": "7a2a94e68c1161aa5c88a971c6afe2cdfc7802a33a4ce93f782e83ac8aee6678"
+    },
+    {
+      "brand": "sonoff",
+      "model": "dongle-lmg21",
+      "type": "openthread_rcp",
+      "version": "2026.6.1_3.1.1",
+      "baudRate": 460800,
+      "flowControl": "sw_flow",
+      "filename": "sonoff_dongle-lmg21_openthread_rcp_2026.6.1_3.1.1_460800_sw_flow.gbl",
+      "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2026.6.1-pre1/sonoff_dongle-lmg21_openthread_rcp_2026.6.1_3.1.1_460800_sw_flow.gbl",
+      "size": 106636,
+      "releaseTag": "v2026.6.1-pre1",
+      "prerelease": true,
+      "sha256": "30895596f3752ee300c3b06f27751b9e8737332bdc2642cd09e6641d379c497e"
+    },
+    {
+      "brand": "sonoff",
+      "model": "dongle-lmg21",
+      "type": "zigbee_ncp",
+      "version": "2026.6.1_9.1.1",
+      "baudRate": 115200,
+      "flowControl": "sw_flow",
+      "filename": "sonoff_dongle-lmg21_zigbee_ncp_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2026.6.1-pre1/sonoff_dongle-lmg21_zigbee_ncp_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "size": 250928,
+      "releaseTag": "v2026.6.1-pre1",
+      "prerelease": true,
+      "sha256": "01473757c22c2f660d2de4779e282b3128fcda6514a2bca0288f5139a664846c"
+    },
+    {
+      "brand": "sonoff",
+      "model": "dongle-lmg21",
+      "type": "zigbee_router",
+      "version": "2026.6.1_9.1.1",
+      "baudRate": 115200,
+      "flowControl": "sw_flow",
+      "filename": "sonoff_dongle-lmg21_zigbee_router_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2026.6.1-pre1/sonoff_dongle-lmg21_zigbee_router_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "size": 238412,
+      "releaseTag": "v2026.6.1-pre1",
+      "prerelease": true,
+      "sha256": "625c8e90f3138dea7b4e02b043d1a5473ce78ca5af9d938428be776ed619c6c0"
+    },
+    {
+      "brand": "sonoff",
+      "model": "dongle-m",
+      "type": "openthread_rcp",
+      "version": "2026.6.1_3.1.1",
+      "baudRate": 115200,
+      "flowControl": "sw_flow",
+      "filename": "sonoff_dongle-m_openthread_rcp_2026.6.1_3.1.1_115200_sw_flow.gbl",
+      "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2026.6.1-pre1/sonoff_dongle-m_openthread_rcp_2026.6.1_3.1.1_115200_sw_flow.gbl",
+      "size": 124880,
+      "releaseTag": "v2026.6.1-pre1",
+      "prerelease": true,
+      "sha256": "17ae603b0f363d457526d96d2a7ef4b4d0ae31f3b1394ca3c482052b3b176969"
+    },
+    {
+      "brand": "sonoff",
+      "model": "dongle-m",
+      "type": "zigbee_ncp",
+      "version": "2026.6.1_9.1.1",
+      "baudRate": 115200,
+      "flowControl": "sw_flow",
+      "filename": "sonoff_dongle-m_zigbee_ncp_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2026.6.1-pre1/sonoff_dongle-m_zigbee_ncp_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "size": 269412,
+      "releaseTag": "v2026.6.1-pre1",
+      "prerelease": true,
+      "sha256": "48c78336e85ff494272925cf95ac54cd8d8317d213e180bbbb4fcd8e5a7b938a"
+    },
+    {
+      "brand": "sonoff",
+      "model": "dongle-m",
+      "type": "zigbee_router",
+      "version": "2026.6.1_9.1.1",
+      "baudRate": 115200,
+      "flowControl": "sw_flow",
+      "filename": "sonoff_dongle-m_zigbee_router_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2026.6.1-pre1/sonoff_dongle-m_zigbee_router_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "size": 257296,
+      "releaseTag": "v2026.6.1-pre1",
+      "prerelease": true,
+      "sha256": "0cdbf48f51bdc6d2099e7518dea4f2585584a9010797516d76f85b425f0f2247"
+    },
+    {
+      "brand": "sonoff",
+      "model": "dongle-pmg24",
+      "type": "openthread_rcp",
+      "version": "2026.6.1_3.1.1",
+      "baudRate": 460800,
+      "flowControl": "sw_flow",
+      "filename": "sonoff_dongle-pmg24_openthread_rcp_2026.6.1_3.1.1_460800_sw_flow.gbl",
+      "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2026.6.1-pre1/sonoff_dongle-pmg24_openthread_rcp_2026.6.1_3.1.1_460800_sw_flow.gbl",
+      "size": 124912,
+      "releaseTag": "v2026.6.1-pre1",
+      "prerelease": true,
+      "sha256": "170514b53956b257e38c5d9d5024e729b3ebf1bd9513bcd254e3c15f4d43cba5"
+    },
+    {
+      "brand": "sonoff",
+      "model": "dongle-pmg24",
+      "type": "zigbee_ncp",
+      "version": "2026.6.1_9.1.1",
+      "baudRate": 460800,
+      "flowControl": "sw_flow",
+      "filename": "sonoff_dongle-pmg24_zigbee_ncp_2026.6.1_9.1.1_460800_sw_flow.gbl",
+      "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2026.6.1-pre1/sonoff_dongle-pmg24_zigbee_ncp_2026.6.1_9.1.1_460800_sw_flow.gbl",
+      "size": 269412,
+      "releaseTag": "v2026.6.1-pre1",
+      "prerelease": true,
+      "sha256": "db3e1f0025acb318ebf36f81e7fd69093096559a62a08c0a9c8912c68e742c3e"
+    },
+    {
+      "brand": "sonoff",
+      "model": "dongle-pmg24",
+      "type": "zigbee_router",
+      "version": "2026.6.1_9.1.1",
+      "baudRate": 115200,
+      "flowControl": "sw_flow",
+      "filename": "sonoff_dongle-pmg24_zigbee_router_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2026.6.1-pre1/sonoff_dongle-pmg24_zigbee_router_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "size": 257296,
+      "releaseTag": "v2026.6.1-pre1",
+      "prerelease": true,
+      "sha256": "e549b0af33e82fbd13ad411c8fd67238aa8ec83f8c40c2bfdffb009cce8054f5"
+    },
+    {
+      "brand": "sonoff",
+      "model": "zbdonglee",
+      "type": "openthread_rcp",
+      "version": "2026.6.1_3.1.1",
+      "baudRate": 921600,
+      "flowControl": "sw_flow",
+      "filename": "sonoff_zbdonglee_openthread_rcp_2026.6.1_3.1.1_921600_sw_flow.gbl",
+      "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2026.6.1-pre1/sonoff_zbdonglee_openthread_rcp_2026.6.1_3.1.1_921600_sw_flow.gbl",
+      "size": 106636,
+      "releaseTag": "v2026.6.1-pre1",
+      "prerelease": true,
+      "sha256": "596ed8c61e37f989a5916493d24bf0096dc07b75ec38c88616d0bc9aac6b022f"
+    },
+    {
+      "brand": "sonoff",
+      "model": "zbdonglee",
+      "type": "zigbee_ncp",
+      "version": "2026.6.1_9.1.1",
+      "baudRate": 115200,
+      "flowControl": "sw_flow",
+      "filename": "sonoff_zbdonglee_zigbee_ncp_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2026.6.1-pre1/sonoff_zbdonglee_zigbee_ncp_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "size": 250928,
+      "releaseTag": "v2026.6.1-pre1",
+      "prerelease": true,
+      "sha256": "f1a4bdcfc6918f5d83a1e9d8726be82af20f635393e5726d4b7b27950825d7f4"
+    },
+    {
+      "brand": "sonoff",
+      "model": "zbdonglee",
+      "type": "zigbee_router",
+      "version": "2026.6.1_9.1.1",
+      "baudRate": 115200,
+      "flowControl": "sw_flow",
+      "filename": "sonoff_zbdonglee_zigbee_router_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "url": "https://github.com/Nerivec/silabs-firmware-builder/releases/download/v2026.6.1-pre1/sonoff_zbdonglee_zigbee_router_2026.6.1_9.1.1_115200_sw_flow.gbl",
+      "size": 240080,
+      "releaseTag": "v2026.6.1-pre1",
+      "prerelease": true,
+      "sha256": "2d9663b69f7d753d511c35721d3ddf4205fe2daa11a8e15f04bfd3c8df7b5fbb"
     }
   ]
 }

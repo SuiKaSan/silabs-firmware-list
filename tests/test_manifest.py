@@ -7,6 +7,7 @@ from firmware_list.manifest import build_manifest
 RELEASE = {
     "tag_name": "v2025.6.2-update1",
     "published_at": "2026-08-01T12:00:00Z",
+    "prerelease": False,
     "assets": [
         {
             "name": "sonoff_dongle-pmg24_zigbee_ncp_8.2.2.0_460800_sw_flow.gbl",
@@ -29,6 +30,23 @@ RELEASE = {
     ],
 }
 
+PRE_RELEASE = {
+    "tag_name": "v2026.6.1-pre1",
+    "published_at": "2026-08-10T12:00:00Z",
+    "prerelease": True,
+    "assets": [
+        {
+            "name": "sonoff_dongle-pmg24_zigbee_ncp_8.2.2.1_460800_sw_flow.gbl",
+            "browser_download_url": (
+                "https://github.com/Nerivec/silabs-firmware-builder/"
+                "releases/download/v2026.6.1-pre1/"
+                "sonoff_dongle-pmg24_zigbee_ncp_8.2.2.1_460800_sw_flow.gbl"
+            ),
+            "size": 245999,
+        },
+    ],
+}
+
 
 class Recorder:
     """Fake hash fetcher that records which urls it was asked to hash."""
@@ -41,7 +59,7 @@ class Recorder:
         return f"hash-of-{url}"
 
 
-def build(release=RELEASE, previous=None, recorder=None, **overrides):
+def build(releases=None, previous=None, recorder=None, **overrides):
     kwargs = dict(
         owner="Nerivec",
         repo="silabs-firmware-builder",
@@ -49,7 +67,10 @@ def build(release=RELEASE, previous=None, recorder=None, **overrides):
     )
     kwargs.update(overrides)
     return build_manifest(
-        release, previous, recorder or Recorder(), **kwargs
+        releases if releases is not None else [RELEASE],
+        previous,
+        recorder or Recorder(),
+        **kwargs,
     )
 
 
@@ -62,10 +83,15 @@ def test_builds_manifest_for_new_release():
     manifest = build(recorder=recorder)
     assert manifest["owner"] == "Nerivec"
     assert manifest["repo"] == "silabs-firmware-builder"
-    assert manifest["releaseTag"] == "v2025.6.2-update1"
-    assert manifest["releasePublishedAt"] == "2026-08-01T12:00:00Z"
     assert manifest["refreshedAt"] == "2026-08-14T07:07:00Z"
     assert manifest["count"] == 2
+    assert manifest["releases"] == [
+        {
+            "tag": "v2025.6.2-update1",
+            "publishedAt": "2026-08-01T12:00:00Z",
+            "prerelease": False,
+        }
+    ]
 
     first = manifest["firmwares"][0]
     assert first["brand"] == "sonoff"
@@ -101,7 +127,7 @@ def test_rehashes_when_size_changes():
     rerelease["assets"][0]["size"] = 999999  # asset replaced under same url
 
     recorder = Recorder()
-    manifest = build(release=rerelease, previous=stale_previous(),
+    manifest = build(releases=[rerelease], previous=stale_previous(),
                      recorder=recorder)
     changed = manifest["firmwares"][0]
     unchanged = manifest["firmwares"][1]
@@ -115,18 +141,19 @@ def test_refuses_when_no_asset_parses():
     for asset in broken["assets"]:
         asset["name"] = "totally_unknown_convention.gbl"
     with pytest.raises(ValueError):
-        build(release=broken)
+        build(releases=[broken])
 
 
 def test_refuses_when_release_has_no_assets():
     with pytest.raises(ValueError):
-        build(release={"tag_name": "t", "published_at": "p", "assets": []})
+        build(releases=[{"tag_name": "t", "published_at": "p",
+                         "assets": []}])
 
 
 def test_partial_failure_keeps_good_assets_and_warns(capsys):
     mixed = copy.deepcopy(RELEASE)
     mixed["assets"][1]["name"] = "totally_unknown_convention.gbl"
-    manifest = build(release=mixed)
+    manifest = build(releases=[mixed])
     assert manifest["count"] == 1
     assert manifest["firmwares"][0]["type"] == "zigbee_ncp"
     assert "warning" in capsys.readouterr().err
@@ -152,6 +179,48 @@ def test_keep_filter_rejects_manifest_when_everything_filtered_out():
 
     with pytest.raises(ValueError):
         build(keep=keep_nothing)
+
+
+def test_includes_latest_pre_release_flagged_on_records():
+    recorder = Recorder()
+    manifest = build(releases=[RELEASE, PRE_RELEASE], recorder=recorder)
+    assert manifest["count"] == 3
+    assert manifest["releases"] == [
+        {
+            "tag": "v2025.6.2-update1",
+            "publishedAt": "2026-08-01T12:00:00Z",
+            "prerelease": False,
+        },
+        {
+            "tag": "v2026.6.1-pre1",
+            "publishedAt": "2026-08-10T12:00:00Z",
+            "prerelease": True,
+        },
+    ]
+    stable = manifest["firmwares"][0]
+    pre = manifest["firmwares"][2]
+    assert stable["prerelease"] is False
+    assert stable["releaseTag"] == "v2025.6.2-update1"
+    assert pre["prerelease"] is True
+    assert pre["releaseTag"] == "v2026.6.1-pre1"
+    assert pre["version"] == "8.2.2.1"
+    # both releases' firmwares were hashed (different urls)
+    assert len(recorder.fetched) == 3
+
+
+def test_pre_release_assets_share_no_hash_with_stable():
+    # same url+size across releases reuses the hash (url is the key)
+    same_asset = copy.deepcopy(PRE_RELEASE)
+    same_asset["assets"][0]["browser_download_url"] = (
+        RELEASE["assets"][0]["browser_download_url"]
+    )
+    same_asset["assets"][0]["size"] = RELEASE["assets"][0]["size"]
+    previous = build(releases=[RELEASE])  # hashes it as stable
+    recorder = Recorder()
+    manifest = build(releases=[RELEASE, same_asset], previous=previous,
+                     recorder=recorder)
+    assert recorder.fetched == []  # reused
+    assert manifest["firmwares"][2]["prerelease"] is True
 
 
 def test_sonoff_dongle_filter_accepts_zbdongle_e_spelling():

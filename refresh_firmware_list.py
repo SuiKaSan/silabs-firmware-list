@@ -23,11 +23,11 @@ import urllib.request
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from firmware_list.manifest import build_manifest
+from firmware_list.manifest import build_manifest, pick_latest_releases
 
 API_URL = (
     "https://api.github.com/repos/Nerivec/silabs-firmware-builder"
-    "/releases/latest"
+    "/releases?per_page=30"
 )
 OWNER = "Nerivec"
 REPO = "silabs-firmware-builder"
@@ -101,12 +101,16 @@ def is_sonoff_dongle(firmware: Dict[str, Any]) -> bool:
 
 
 def main() -> int:
-    release = http_get_json(API_URL)
+    listing = http_get_json(API_URL)
+    releases = pick_latest_releases(listing)
+    if not releases:
+        print("error: no releases found upstream", file=sys.stderr)
+        return 1
     refreshed_at = dt.datetime.now(dt.timezone.utc).strftime(
         "%Y-%m-%dT%H:%M:%SZ"
     )
     manifest = build_manifest(
-        release,
+        releases,
         load_previous(),
         download_and_hash,
         owner=OWNER,
@@ -117,7 +121,8 @@ def main() -> int:
     OUTPUT.write_text(
         json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
     )
-    print(f"wrote {manifest['count']} firmwares from {manifest['releaseTag']}")
+    tags = ", ".join(r["tag"] for r in manifest["releases"])
+    print(f"wrote {manifest['count']} firmwares from {tags}")
     return 0
 
 

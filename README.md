@@ -19,6 +19,7 @@ https://raw.githubusercontent.com/<your-username>/silabs-firmware-list/main/firm
 ```
 
 Each firmware record contains: brand, model, firmware type, version,
-baud rate, flow control, filename, download link, file size, and sha256.
-Download links point straight at the original firmware files on GitHub
-Releases — click to download.
+baud rate, flow control, filename, download link, file size, sha256, the
+release tag it came from, and a `prerelease` flag (`true` for pre-release
+firmware). Download links point straight at the original firmware files
+on GitHub Releases — click to download.
