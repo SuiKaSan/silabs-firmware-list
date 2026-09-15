@@ -3,8 +3,9 @@
 Automatically tracks SONOFF dongle firmware (Dongle-E / -L / -M / -PMG24)
 published by
 [silabs-firmware-builder](https://github.com/Nerivec/silabs-firmware-builder),
-and turns it into a list with download links and sha256 checksums for a
-website to display and serve.
+turns it into a list with download links and sha256 checksums, and mirrors
+the firmware files themselves into `firmwares/` so a web frontend can
+fetch the bytes directly (CORS-enabled) for flashing over Web Serial.
 
 The list refreshes automatically once an hour, staying in sync with the
 latest upstream release.
@@ -21,13 +22,21 @@ https://raw.githubusercontent.com/<your-username>/silabs-firmware-list/main/firm
 Each firmware record contains: brand, model, firmware type, version,
 baud rate, flow control, filename, download link, file size, sha256, the
 release tag it came from, and a `prerelease` flag (`true` for pre-release
-firmware). Download links point straight at the original firmware files
-on GitHub Releases — click to download.
+firmware).
 
-> **Note for frontend code**: the `firmwares.json` URL (on
-> `raw.githubusercontent.com`) sends CORS headers and can be `fetch`ed
-> freely. The firmware download URLs (on `github.com`) do **not** — use
-> them as plain `<a href>` links (or `window.open`), never `fetch`, or
-> the browser will block them with a CORS error. GitHub serves release
-> assets with `Content-Disposition: attachment`, so the `<a>` navigation
-> triggers a download without leaving the page.
+Two kinds of link per record:
+
+- `downloadUrl` — the mirrored copy in this repository's `firmwares/`
+  directory, served from `raw.githubusercontent.com` with CORS headers.
+  **Use this in frontend code**: `fetch(downloadUrl)` returns the bytes
+  as an ArrayBuffer for flashing over Web Serial, and you can verify them
+  against the record's `sha256` before writing to the device.
+- `url` — the original GitHub Releases asset. GitHub's release endpoints
+  send no CORS headers, so this link only works as a plain `<a href>`
+  navigation (browser download), never as a `fetch` target.
+
+The `firmwares/` mirror always holds exactly the files in the current
+manifest — stale files are pruned, missing ones re-downloaded, unchanged
+ones left alone — so the checkout stays around 5 MB. Note that git
+*history* still accumulates old firmware blobs; if the repository ever
+grows uncomfortably large, squash the history once.

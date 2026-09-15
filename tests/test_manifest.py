@@ -63,6 +63,7 @@ def build(releases=None, previous=None, recorder=None, **overrides):
     kwargs = dict(
         owner="Nerivec",
         repo="silabs-firmware-builder",
+        host_repo="SuiKaSan/silabs-firmware-list",
         refreshed_at="2026-08-14T07:07:00Z",
     )
     kwargs.update(overrides)
@@ -102,6 +103,11 @@ def test_builds_manifest_for_new_release():
     assert first["flowControl"] == "sw_flow"
     assert first["filename"] == RELEASE["assets"][0]["name"]
     assert first["url"] == RELEASE["assets"][0]["browser_download_url"]
+    assert first["downloadUrl"] == (
+        "https://raw.githubusercontent.com/SuiKaSan/silabs-firmware-list/"
+        "main/firmwares/"
+        "sonoff_dongle-pmg24_zigbee_ncp_8.2.2.0_460800_sw_flow.gbl"
+    )
     assert first["size"] == 245760
     assert first["sha256"] == f"hash-of-{first['url']}"
 

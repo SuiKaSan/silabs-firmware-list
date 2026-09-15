@@ -40,6 +40,7 @@ def build_manifest(
     fetch_sha256: HashFetcher,
     owner: str,
     repo: str,
+    host_repo: str,
     refreshed_at: str,
     keep: Optional[KeepFilter] = None,
 ) -> Dict[str, Any]:
@@ -83,6 +84,10 @@ def build_manifest(
                 **fields,
                 "filename": name,
                 "url": url,
+                "downloadUrl": (
+                    f"https://raw.githubusercontent.com/{host_repo}"
+                    f"/main/firmwares/{name}"
+                ),
                 "size": size,
                 "releaseTag": release["tag_name"],
                 "prerelease": bool(release.get("prerelease")),
