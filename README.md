@@ -23,3 +23,11 @@ baud rate, flow control, filename, download link, file size, sha256, the
 release tag it came from, and a `prerelease` flag (`true` for pre-release
 firmware). Download links point straight at the original firmware files
 on GitHub Releases — click to download.
+
+> **Note for frontend code**: the `firmwares.json` URL (on
+> `raw.githubusercontent.com`) sends CORS headers and can be `fetch`ed
+> freely. The firmware download URLs (on `github.com`) do **not** — use
+> them as plain `<a href>` links (or `window.open`), never `fetch`, or
+> the browser will block them with a CORS error. GitHub serves release
+> assets with `Content-Disposition: attachment`, so the `<a>` navigation
+> triggers a download without leaving the page.
