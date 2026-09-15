@@ -26,6 +26,20 @@ def test_parses_zigbee_router_with_hw_flow():
     assert record["flowControl"] == "hw_flow"
 
 
+def test_parses_no_flow_variant():
+    record = parse_gbl_filename(
+        "sonoff_zbdonglee_zigbee_ncp_8.2.2.0_115200_no_flow.gbl"
+    )
+    assert record == {
+        "brand": "sonoff",
+        "model": "zbdonglee",
+        "type": "zigbee_ncp",
+        "version": "8.2.2.0",
+        "baudRate": 115200,
+        "flowControl": "no_flow",
+    }
+
+
 def test_version_keeps_openthread_suffix():
     record = parse_gbl_filename(
         "sonoff_dongle-pmg24_openthread_rcp_2.7.2.0_GitHub-fb0446f53"

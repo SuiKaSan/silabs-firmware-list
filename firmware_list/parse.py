@@ -3,8 +3,11 @@
 Real-world filename grammar (upstream research doc, section 4.3 — the
 README's six-segment convention is a simplification that does not hold):
 
-    <device>_<fw_type>_<version>_<baudrate>_<sw|hw>_flow.gbl   # zigbee / openthread
+    <device>_<fw_type>_<version>_<baudrate>_<variant>_flow.gbl  # zigbee / openthread
     <device>_<fw_type>_<version>.gbl                            # bootloader
+
+`<variant>` is the flow-control mode: `sw`, `hw`, or `no` (rendered as
+`sw_flow` / `hw_flow` / `no_flow`).
 
 - `<fw_type>` is one of a closed set: zigbee_ncp, zigbee_router,
   openthread_rcp, bootloader.
@@ -21,7 +24,7 @@ from typing import Dict
 _FULL_RE = re.compile(
     r"^(?P<device>.+?)[_-]"
     r"(?P<fw_type>zigbee_ncp|zigbee_router|openthread_rcp)"
-    r"_(?P<version>\d.+?)_(?P<baud>\d+)_(?P<variant>sw|hw)_flow$"
+    r"_(?P<version>\d.+?)_(?P<baud>\d+)_(?P<variant>[a-z]+)_flow$"
 )
 _BOOTLOADER_RE = re.compile(
     r"^(?P<device>.+?)[_-](?P<fw_type>bootloader)_(?P<version>\d.+?)$"
