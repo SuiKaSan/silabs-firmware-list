@@ -11,6 +11,8 @@ import hashlib
 from pathlib import Path
 from typing import Any, Callable, Dict, List
 
+from firmware_list.manifest import upstream_url
+
 ByteDownloader = Callable[[str], bytes]
 
 
@@ -44,6 +46,7 @@ def prune_and_ensure(
     Deletes files not referenced by the manifest, (re-)downloads any
     record whose file is missing or whose on-disk bytes hash to something
     other than the manifest's sha256, and leaves matching files alone.
+    Downloads come from the upstream release, not the mirror.
     """
     records: List[Dict[str, Any]] = manifest["firmwares"]
     keep = {fw["filename"] for fw in records}
@@ -58,6 +61,6 @@ def prune_and_ensure(
         if not path.exists() or (
             hashlib.sha256(path.read_bytes()).hexdigest() != fw["sha256"]
         ):
-            data = download(fw["url"])
+            data = download(upstream_url(manifest, fw))
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(data)

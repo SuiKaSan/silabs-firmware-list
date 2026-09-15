@@ -24,6 +24,20 @@ def manifest_changed(
     return any(old.get(k) != new.get(k) for k in keys)
 
 
+def upstream_url(manifest: Dict[str, Any], fw: Dict[str, Any]) -> str:
+    """Rebuild the upstream GitHub Releases URL for a manifest record.
+
+    The record's public `url` points at the local mirror, so anything
+    needing the true source (incremental hash reuse, re-downloads)
+    rebuilds the link from owner/repo (manifest top level) plus the
+    record's releaseTag and filename.
+    """
+    return (
+        f"https://github.com/{manifest['owner']}/{manifest['repo']}"
+        f"/releases/download/{fw['releaseTag']}/{fw['filename']}"
+    )
+
+
 def pick_latest_releases(
     releases: Sequence[Dict[str, Any]],
 ) -> List[Dict[str, Any]]:
@@ -59,8 +73,9 @@ def build_manifest(
     caller leaves the previous manifest untouched (ADR-0001).
     """
     prev_by_url: Dict[str, Dict[str, Any]] = {
-        fw["url"]: fw for fw in (previous or {}).get("firmwares", [])
-    }
+        upstream_url(previous, fw): fw
+        for fw in (previous or {}).get("firmwares", [])
+    } if previous else {}
 
     firmwares: List[Dict[str, Any]] = []
     releases_meta: List[Dict[str, Any]] = []
@@ -83,8 +98,11 @@ def build_manifest(
             firmware: Dict[str, Any] = {
                 **fields,
                 "filename": name,
-                "url": url,
-                "downloadUrl": (
+                # public link: the CORS-enabled mirror copy in this repo,
+                # for frontend fetch (see ADR-0004). The upstream release
+                # URL is rebuilt from releaseTag+filename when the sync
+                # needs to download.
+                "url": (
                     f"https://raw.githubusercontent.com/{host_repo}"
                     f"/main/firmwares/{name}"
                 ),

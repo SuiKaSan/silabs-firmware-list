@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write # required to push the regenerated firmwares.json
 
+concurrency:
+  group: repo-write # serialize with shrink-history's force push
+  cancel-in-progress: false
+
 jobs:
   refresh:
     runs-on: ubuntu-latest

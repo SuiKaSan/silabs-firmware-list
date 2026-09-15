@@ -102,14 +102,17 @@ def test_builds_manifest_for_new_release():
     assert first["baudRate"] == 460800
     assert first["flowControl"] == "sw_flow"
     assert first["filename"] == RELEASE["assets"][0]["name"]
-    assert first["url"] == RELEASE["assets"][0]["browser_download_url"]
-    assert first["downloadUrl"] == (
+    assert first["url"] == (
         "https://raw.githubusercontent.com/SuiKaSan/silabs-firmware-list/"
         "main/firmwares/"
         "sonoff_dongle-pmg24_zigbee_ncp_8.2.2.0_460800_sw_flow.gbl"
     )
+    assert "downloadUrl" not in first
     assert first["size"] == 245760
-    assert first["sha256"] == f"hash-of-{first['url']}"
+    # hash fetcher is keyed on the UPSTREAM asset url, not the mirror url
+    assert first["sha256"] == (
+        f"hash-of-{RELEASE['assets'][0]['browser_download_url']}"
+    )
 
     # new release, no previous manifest: every firmware must be hashed
     assert len(recorder.fetched) == 2
@@ -138,7 +141,9 @@ def test_rehashes_when_size_changes():
     changed = manifest["firmwares"][0]
     unchanged = manifest["firmwares"][1]
     assert changed["size"] == 999999
-    assert changed["sha256"] == f"hash-of-{changed['url']}"
+    assert changed["sha256"] == (
+        f"hash-of-{RELEASE['assets'][0]['browser_download_url']}"
+    )
     assert len(recorder.fetched) == 1
 
 

@@ -24,16 +24,14 @@ baud rate, flow control, filename, download link, file size, sha256, the
 release tag it came from, and a `prerelease` flag (`true` for pre-release
 firmware).
 
-Two kinds of link per record:
-
-- `downloadUrl` — the mirrored copy in this repository's `firmwares/`
-  directory, served from `raw.githubusercontent.com` with CORS headers.
-  **Use this in frontend code**: `fetch(downloadUrl)` returns the bytes
-  as an ArrayBuffer for flashing over Web Serial, and you can verify them
-  against the record's `sha256` before writing to the device.
-- `url` — the original GitHub Releases asset. GitHub's release endpoints
-  send no CORS headers, so this link only works as a plain `<a href>`
-  navigation (browser download), never as a `fetch` target.
+The `url` field points at the mirrored copy in this repository's
+`firmwares/` directory, served from `raw.githubusercontent.com` with
+CORS headers. In frontend code, `fetch(url)` returns the firmware bytes
+as an ArrayBuffer — ready for flashing over Web Serial — and you can
+verify them against the record's `sha256` before writing to the device.
+The same link also works as a plain `<a href>` download. (GitHub's own
+release-download URLs send no CORS headers, which is why the mirror
+exists; see ADR-0004.)
 
 The `firmwares/` mirror always holds exactly the files in the current
 manifest — stale files are pruned, missing ones re-downloaded, unchanged
