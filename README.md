@@ -35,6 +35,8 @@ exists; see ADR-0004.)
 
 The `firmwares/` mirror always holds exactly the files in the current
 manifest — stale files are pruned, missing ones re-downloaded, unchanged
-ones left alone — so the checkout stays around 5 MB. Note that git
-*history* still accumulates old firmware blobs; if the repository ever
-grows uncomfortably large, squash the history once.
+ones left alone — so the checkout stays around 5 MB. Old firmware blobs
+still accumulate in git *history*; a monthly workflow (`shrink-history`)
+squashes the whole history into a single commit whenever it exceeds
+50 MB. After it runs, resync local clones with
+`git fetch && git reset --hard origin/main`.
